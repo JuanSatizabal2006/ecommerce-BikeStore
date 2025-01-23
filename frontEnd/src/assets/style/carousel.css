@@ -1,0 +1,18 @@
+.carousel-icon {
+    color: black;
+    background: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+    padding: 3px;
+    transition: all 0.3s ease;
+    scroll-behavior: none;
+  }
+  
+  .carousel-icon:hover{
+
+    color: #A40505;
+    border: 2px solid #A40505;
+    transition: 1s;
+    scale: 1.2;
+  }

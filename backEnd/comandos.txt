@@ -1,0 +1,12 @@
+COMANDO PARA INICIAR ARCHIVO NODE JS: npm init -y
+
+DEPENDENCIAS
+
+EXPRESS = npm i express morgan cors
+devDependences = npm i nodemon -D
+
+
+
+PostgreSQL = npm i pg
+
+dotenv (variables de entorno) = npm i dotenv

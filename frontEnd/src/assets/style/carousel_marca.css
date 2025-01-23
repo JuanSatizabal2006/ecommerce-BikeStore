@@ -1,0 +1,42 @@
+.linea {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 12vh;
+  }
+  
+  .linea::before,
+  .linea::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background-color: #A40505;
+  }
+  
+  .texto {
+    padding: 0 1rem;
+    color: #000000;
+    font-weight: semi-bold;
+    font-size: 1.5rem;
+    letter-spacing: 0.1rem;    
+  }
+  
+  .images {
+    display: flex;
+    height: 13em;
+    width: 100%;
+    border-bottom: solid #A40505;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .images img {
+    height: 12em;
+    width: 100%;
+  }
+  
+  .img1 {
+    height: 4em;
+  }
+  

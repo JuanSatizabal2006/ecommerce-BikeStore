@@ -1,0 +1,2 @@
+npm install react-spring
+npm install flowbite-react

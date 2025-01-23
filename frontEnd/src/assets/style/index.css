@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('./carousel_marca.css');
+@import url('./carousel.css');
+@import url('./categories.css');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f2f2f2;
+    font-family: "Public Sans", sans-serif !important;
+    overflow-y: auto;
+    position: static !important;
+    height: auto !important;
+    max-height: none !important;
+}
