@@ -29,47 +29,38 @@ export const App = () => {
   return (
     <BrowserRouter>
       {/* Definir que tendré una navegacion */}
-      <AuthProvider>
-        {/* TODO: Aquellas rutas que necesitan el contexto del carritos */}
-        <CartProvider>
-          <Routes>
-            {/* Rutas que necesitan proteccion */}
-            <Route element={<RutaProtegida />}>
-              <Route path="/carrito" element={<Carritopago></Carritopago>} />
-              <Route path="/pago" element={<PagoUsuario />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/catalogo" element={<Catalogo />} />
-            </Route>
-              <Route path="/producto/:idProducto" element={<DetalleProducto />} />
-          </Routes>
-        </CartProvider>
 
-        <Routes>
+      {/* TODO: Aquellas rutas que necesitan el contexto del carritos */}
 
-          <Route element={<RutaProtegida />}>
-            <Route path="/login" element={<InicioSesion />} />
-            <Route path="/registro" element={<Registro />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact_us />} />
-            <Route path="/termCond" element={<PoliticaCompra />} />
-            <Route path="/pedido" element={<PedidoDet />} />
-            <Route path="/perfil" element={<Perfil />} />
-            <Route path="/mispedidos" element={<Pedidos />} />
-          </Route>
+      <Routes>
+        {/* Rutas que necesitan proteccion */}
 
+        <Route path="/carrito" element={<Carritopago></Carritopago>} />
+        <Route path="/pago" element={<PagoUsuario />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/catalogo" element={<Catalogo />} />
 
-          <Route element={<RutaProtegida />}>
-            <Route path="/admin/formproducto" element={<FormArticulo />} />
-            <Route path="/inventario" element={<InventaAdmin />} />
-            <Route path="/pedidosadmin" element={<PedAdmin />} />
-            <Route path="/pedidodetalle" element={<VerPedidoAdmin />} />
-            <Route path="/perfilAdmin" element={<PerfilAdmin />} />
-            <Route path="/dashboard" element={<DashBoard />} />
-          </Route>
-          <Route path='/noentresaqui' element={<Easteregg />} />
-        </Routes>
-      </AuthProvider>
+        <Route path="/producto/:idProducto" element={<DetalleProducto />} />
+
+        <Route path="/login" element={<InicioSesion />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact_us />} />
+        <Route path="/termCond" element={<PoliticaCompra />} />
+        <Route path="/pedido" element={<PedidoDet />} />
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/mispedidos" element={<Pedidos />} />
+
+        <Route path="/admin/formproducto" element={<FormArticulo />} />
+        <Route path="/inventario" element={<InventaAdmin />} />
+        <Route path="/pedidosadmin" element={<PedAdmin />} />
+        <Route path="/pedidodetalle" element={<VerPedidoAdmin />} />
+        <Route path="/perfilAdmin" element={<PerfilAdmin />} />
+        <Route path="/dashboard" element={<DashBoard />} />
+
+        <Route path="/noentresaqui" element={<Easteregg />} />
+      </Routes>
     </BrowserRouter>
   );
 };

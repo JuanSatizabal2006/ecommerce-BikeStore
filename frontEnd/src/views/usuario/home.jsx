@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { CarouselP } from "../../components/carrusel/carousel.jsx";
 import { NavBar } from "../../components/allNavBar/navBar.jsx";
 import { Tittle } from "../../components/home/Tittle1.jsx";
 import { Categories } from "../../components/home/Categories.jsx";
@@ -12,6 +11,7 @@ import { ProductoHome } from "../../components/home/productoHome.jsx";
 import { CartProvider } from "../../components/carrito/carritoContext.jsx";
 import { Boton } from "../../components/buttons/boton.jsx";
 import { FooterInfo } from "../../components/home/footerInfo.jsx";
+import CarruselHome from "../../sections/usuario/home/carruselHome.jsx";
 
 export const Home = () => {
 
@@ -28,7 +28,8 @@ export const Home = () => {
         <CartProvider>
             <NavBar />
         </CartProvider>
-            <CarouselP />
+        <CarruselHome />
+            
             <div className="section-1">
                 <Tittle
                     Tittle={'Categorias'}
