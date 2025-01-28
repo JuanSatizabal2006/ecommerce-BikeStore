@@ -15,7 +15,7 @@ import CarruselHome from "../../sections/usuario/home/carruselHome.jsx";
 
 export const Home = () => {
 
-    const isUser = JSON.parse(localStorage.getItem('infoUser')) || null
+    //const isUser = JSON.parse(localStorage.getItem('infoUser')) || null
 
     const navigate = useNavigate();
 
@@ -25,11 +25,14 @@ export const Home = () => {
 
     return (
         <>
+        {/*}
         <CartProvider>
             <NavBar />
         </CartProvider>
+        */}
+        <h1>AAAAAAAAAAAAAAA</h1>
         <CarruselHome />
-            
+            {/*}
             <div className="section-1">
                 <Tittle
                     Tittle={'Categorias'}
@@ -82,7 +85,7 @@ export const Home = () => {
                 !isUser && <FooterInfo />
             }
             <Footer />
-
+            */}
         </>
     );
 };

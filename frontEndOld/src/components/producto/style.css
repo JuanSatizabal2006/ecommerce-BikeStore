@@ -1,0 +1,50 @@
+li a {
+    border: #a40505 1px solid;
+    padding: 0.1rem 1rem;
+    cursor: pointer;
+    color: #a40505 !important;
+}
+
+li.break a {
+    border-color: #a40505;
+}
+
+li.previous a{
+    margin-right: 5px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+li.next a{
+    margin-left: 5px;
+    border-radius: 0px 5px 5px 0px;
+}
+
+li.active a {
+    color: white;
+    min-width: 32px;
+}
+
+li.disabled a {
+    color: grey;
+}
+
+li.disable,
+li.disabled a {
+    cursor: default;
+}
+
+li.selected{
+    background-color: #a40505;
+}
+
+li.selected a{
+    color: #ffffff !important;
+}
+
+/* 
+red : '#a40505',
+white : '#ffffff',
+black : '#000000',
+grey : '#979797',
+green : '#1A8300'
+*/
