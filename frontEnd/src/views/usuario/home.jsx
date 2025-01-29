@@ -12,6 +12,7 @@ import { CartProvider } from "../../components/carrito/carritoContext.jsx";
 import { Boton } from "../../components/buttons/boton.jsx";
 import { FooterInfo } from "../../components/home/footerInfo.jsx";
 import CarruselHome from "../../sections/usuario/home/carruselHome.jsx";
+import { dataCarruselHome } from "../../constants/carruselHome.js";
 
 export const Home = () => {
 
