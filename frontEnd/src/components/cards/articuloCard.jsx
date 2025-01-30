@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { BotonCarrito } from "../buttons/botonCarrito";
 import { usarCarrito } from "../../helper/usarCarrito";
 
-export const Producto = ({
+
+export const ArticuloCard = ({
   descuento,
   urlmg,
   nombreProducto,

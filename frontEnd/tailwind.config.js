@@ -15,9 +15,12 @@ export default withMT({
         white: "#ffffff",
         black: "#000000",
         grey: "#979797",
-        grey_transparent: "#d9d9d9b3",
+        grey_transparent: "#d9d9d999",
         green: "#1A8300",
         wgrey: "#F2F2F2",
+      },
+      fontFamily: {
+        PublicSans: ["Public Sans", "monospace"],
       },
     },
   },
