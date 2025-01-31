@@ -1,3 +1,6 @@
+//MEJORAR A OPCION DE OBJETO
+
+
 const crearRuta = (data) => {
     let retorno = '';
 
