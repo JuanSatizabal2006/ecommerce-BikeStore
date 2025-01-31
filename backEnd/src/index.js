@@ -1,16 +1,22 @@
 const express = require("express"); //Importacion de modulos express
 const morgan = require("morgan"); //Importacion de modulos morgan
 const cors = require("cors"); //Importacion de modulos cors
+const { CLOUD_NAME, API_KEY, API_KEY_2 } = require("./config");
+const bikeRoutes = require("./routes/bike.routes");
+
+
 
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
-  secure: true,
+  cloud_name: CLOUD_NAME,
+  api_key: API_KEY,
+  api_secret: API_KEY_2,
+  secure : true
 });
 
 console.log(cloudinary.config());
 
-const bikeRoutes = require("./routes/bike.routes");
 
 const app = express(); //En app recaen todas las funcionalidades de express
 
