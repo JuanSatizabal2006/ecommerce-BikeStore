@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Producto } from "../../../components/producto/producto";
 import { ArticuloCard } from "../../../components/cards/articuloCard";
+import TitleHome from "../../../components/titleHome";
 
 const CatalogoTop = () => {
   const [productos, setProductos] = useState([]);
@@ -18,16 +18,12 @@ const CatalogoTop = () => {
 
   return (
     <section>
-      <div className="max-w-[800px] text-center">
-        <h3 className="text-4xl font-semibold mb-6">
-          ¡Explora nuestro catalogo!
-        </h3>
-        <p>
-          Explora nuestro catálogo sabiendo que estás obteniendo lo mejor sin
+      <TitleHome
+        titulo="¡Explora nuestro catalogo!"
+        texto="Explora nuestro catálogo sabiendo que estás obteniendo lo mejor sin
           comprometer tu presupuesto. Disfruta de precios competitivos y ahorros irresistibles en
-          cada compra, la calidad no debería romper el banco.
-        </p>
-      </div>
+          cada compra, la calidad no debería romper el banco."
+      />
       <div className="productos flex xl:flex-row flex-col xl:justify-center items-center gap-x-16 ">
         {productos.map((item) => (
           <ArticuloCard

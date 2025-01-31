@@ -13,7 +13,7 @@ export default withMT({
         current: "currentColor",
         red: "#a40505",
         white: "#ffffff",
-        black: "#000000",
+        black: "#1e1e1e",
         grey: "#979797",
         grey_transparent: "#d9d9d999",
         green: "#1A8300",

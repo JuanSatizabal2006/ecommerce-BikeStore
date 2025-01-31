@@ -6,6 +6,8 @@ import CategoriasHome from "../../sections/usuario/home/categoriasHome.jsx";
 import CarruselMarcas from "../../sections/usuario/home/carruselMarcas.jsx";
 import CatalogoTop from "../../sections/usuario/home/catalogoTop.jsx";
 import Servicios from "../../sections/usuario/home/servicios.jsx";
+import { FooterInfo } from "../../components/footers/footerInfo.jsx";
+import { Footer } from "../../components/footers/footer.jsx";
 
 export const Home = () => {
   //const isUser = JSON.parse(localStorage.getItem('infoUser')) || null
@@ -20,37 +22,18 @@ export const Home = () => {
     <>
       <NavBar />
       <CarruselHome />
-      <main className="px-14 py-10 flex flex-col items-center gap-16">
+      <main className="px-14 py-10 flex flex-col items-center gap-20">
         <CategoriasHome />
         <CarruselMarcas />
         <CatalogoTop />
         <Servicios />
-        <div className="w-full h-80 bg-red"></div>
+        <FooterInfo />
       </main>
+      <Footer />
       {/*
-            <div className="section-3 flex flex-col gap-4">
-
-            </div>
-            <div className="section-4">
-                <div className="container-tittle-nosotros my-10">
-                    <Tittle
-                        Tittle={'Nuestro Servicios'}
-                        Text={"No solo ofrecemos bicicletas excepcionales, sino que también nos "}
-                        Text2={"comprometemos a brindarte una experiencia completa. Más allá de"}
-                        Text3={"la venta de bicicletas, te presentamos nuestros servicios exclusivos"}
-                        Text4={"que transformarán tu conexión con el ciclismo"}
-
-                    />
-                </div>
-            </div>
-            <div className="section-5">
-                <Services />
-            </div>
-
             {
                 !isUser && <FooterInfo />
             }
-            <Footer />
             */}
     </>
   );

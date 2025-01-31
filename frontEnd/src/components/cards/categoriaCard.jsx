@@ -9,7 +9,9 @@ const CategoriaCard = ({ categoria, img, info }) => {
         </div>
         <img src={img} alt={categoria} />
       </div>
-      <p className="first-letter:uppercase font-semibold mt-3 text-lg">{categoria}</p>
+      <p className="first-letter:uppercase font-semibold mt-3 text-lg">
+        {categoria}
+      </p>
     </div>
   );
 };

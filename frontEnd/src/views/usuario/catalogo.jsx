@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { NavBar } from "../../components/allNavBar/navBar";
-import { Footer } from "../../components/footer/footer";
+import { Footer } from "../../components/footers/footer";
 import { Producto } from "../../components/producto/producto";
 import { Categorías } from "../../components/producto/filtrado/filtro";
 import Paginador from "../../components/producto/paginador";
