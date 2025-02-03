@@ -4,17 +4,18 @@ const { jsonRespuesta } = require("../../lib/jsonRespuesta");
 const postArticulos = async (req, res) => {
   //*INFORMACION QUE RECIBO DE PARTE DEL CLIENTE
   const {
-    id_articulo,
+    idArticulo,
     nombre,
     impuesto,
     descuento,
     margen,
     stock,
     costo,
-    id_categoria,
-    segunda_desc,
-    referencia,
-    precio_total,
+    idCategoria,
+    descripcion,
+    talla,
+    precioTotal,
+    //referencia,
   } = req.user.producto;
 
   const rutasImg = req.user.imagenes.map((item) => {
@@ -25,17 +26,17 @@ const postArticulos = async (req, res) => {
 
   //Valido si están todos los datos
   if (
-    !id_articulo ||
+    !idArticulo ||
     !nombre ||
     !impuesto ||
     !descuento ||
     !margen ||
     !stock ||
     !costo ||
-    !id_categoria ||
-    !segunda_desc ||
-    !referencia ||
-    !precio_total
+    !idCategoria ||
+    !descripcion ||
+    !talla ||
+    !precioTotal
   ) {
     return res
       .status(300)

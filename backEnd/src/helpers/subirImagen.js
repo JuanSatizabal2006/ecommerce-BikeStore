@@ -1,0 +1,54 @@
+const cloudinary = require("cloudinary").v2;
+const { CLOUD_NAME, API_KEY, API_KEY_2 } = require("../config");
+const { crearRuta } = require("./rutaImg");
+
+cloudinary.config({
+  cloud_name: CLOUD_NAME,
+  api_key: API_KEY,
+  api_secret: API_KEY_2,
+  secure: true,
+});
+//REFERENCIA NOMBRE + CATEGORIA + ALGUN ID UNICO
+
+//TOCA ENVOLVERLO COMO UNA PROMESA YA QUE CLOUINARY RETORNA UN CALLBACK Y NO UNA PROMESA PREDERTIMADANETE
+//Y ASI PODEMOS USAR PROMISE.ALL PARA SUBIR VARIAS IMAGENES A LA VEZ
+const promiseCloudinary = (file, id) => {
+  console.log("ID en promesa => " + id);
+
+  console.log("llamado funcion => " + crearRuta(id));
+
+  return new Promise((resolve, reject) => {
+    //Usamos el metodo upload_stream de cloudinary para subir la imagen
+    cloudinary.uploader
+      .upload_stream({ folder: crearRuta(id) }, (error, uploadedImage) => {
+        //Manejo de errores
+        if (error)
+          return {
+            mensaje: "Subida de imagen fallida",
+            error: error,
+          };
+        resolve(uploadedImage.secure_url); //Si todo sale bien, resolvemos la promesa con la imagen subida
+      })
+      .end(file.buffer); //Esto envia el buffer de la imagen a cloudinary
+  });
+};
+
+//Middleware donde recibimos las imagenes y las subimos a Cloudinary, estas imagenes son temporales, es decir que no se guardan
+//en el servidor, se suben directamente a Cloudinary, esto funciona asi ya que manejamos el acceso a la imagen con su buffer y no con su ruta
+//es decir, estas se guardan en memoria RAM y no el disco
+
+const subirImagen = async (req, res, next) => {
+  try {
+    //faltarian validaciones
+    const { idCategoria } = req.body;
+
+    const result = await Promise.all(
+      req.files.map((file) => promiseCloudinary(file, idCategoria))
+    );
+    res.send({ message: "Imagen subida", urls: result });
+  } catch (error) {
+    res.send({ error: error.message });
+  }
+};
+
+module.exports = { subirImagen };
