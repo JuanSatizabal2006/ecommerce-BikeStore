@@ -1,47 +1,48 @@
-//faltaria crear una funcion que reciba los datos de la bicicleta y cree una referencia para este
+const db = require("../db.js");
+const { añadirCeros } = require("./añadirCeros.js");
 
-const crearRuta = (id, referencia = "prueba") => {
-  let retorno = "";
+const crearReferencia = async (id, nombre) => {
+  //QUERY OBTENER ULTIMO ID DE IMAGENES
+  const queryCategoria = await db.query(
+    'SELECT * FROM categorias WHERE "idCategoria" = $1',
+    [id]
+  );
+  //Obtenemos las dos primeras letras de la categoria y subcategoria
+  const categoria = `${queryCategoria.rows[0].categoria
+    .slice(0, 2)
+    .toUpperCase()}${queryCategoria.rows[0].subCategoria
+    .slice(0, 2)
+    .toUpperCase()}`;
+  
+  //Obtenemos el id del ultimo articulo de la categoria
+  const maxArticulo = await db.query(
+    `SELECT MAX("idArticulo") FROM articulos WHERE "idCategoria" = $1`,
+    [id]
+  );
+
+  let consecutivo = !maxArticulo.rows[0].max
+    ? "001"
+    : añadirCeros(maxArticulo.rows[0].max + 1);
+  return categoria + consecutivo;
+};
+
+const crearRuta = async (id, nombre) => {
   let idCat = parseInt(id);
-  switch (idCat) {
-    case 1:
-      console.log("entro en el case 1");
+  let referencia = await crearReferencia(id, nombre);
+  const rutas = {
+    1: `bicicletas/montana/`,
+    2: "bicicletas/ruta/",
+    3: "bicicletas/urbana/",
+    4: "ropa/masculino/",
+    5: "ropa/femenino/",
+    6: "ropa/guantes/",
+    7: "accesorios/seguridad/",
+    8: "accesorios/cascos/",
+    9: "accesorios/buff/",
+    10: "accesorios/balaclava/",
+  };
 
-      retorno = `bicicletas/montana/${referencia}/`;
-      break;
-    case 2:
-      retorno = `bicicletas/ruta/${referencia}/`;
-      break;
-    case 3:
-      retorno = `bicicletas/urbana/${referencia}/`;
-      break;
-    case 4:
-      retorno = `ropa/masculino/${referencia}/`;
-      break;
-    case 5:
-      retorno = `ropa/femenino/${referencia}/`;
-      break;
-    case 6:
-      retorno = `ropa/guantes/${referencia}/`;
-      break;
-    case 7:
-      retorno = `accesorios/seguridad/${referencia}/`;
-      break;
-    case 8:
-      retorno = `accesorios/cascos/${referencia}/`;
-      break;
-    case 9:
-      retorno = `accesorios/buff/${referencia}/`;
-      break;
-    case 10:
-      retorno = `accesorios/balaclava/${referencia}/`;
-      break;
-  }
-  console.log(typeof id);
-
-  console.log("valor en la funcion => " + retorno);
-
-  return retorno;
+  return `${rutas[idCat]}${referencia}`;
 };
 
 module.exports = { crearRuta };

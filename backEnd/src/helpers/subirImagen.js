@@ -12,15 +12,11 @@ cloudinary.config({
 
 //TOCA ENVOLVERLO COMO UNA PROMESA YA QUE CLOUINARY RETORNA UN CALLBACK Y NO UNA PROMESA PREDERTIMADANETE
 //Y ASI PODEMOS USAR PROMISE.ALL PARA SUBIR VARIAS IMAGENES A LA VEZ
-const promiseCloudinary = (file, id) => {
-  console.log("ID en promesa => " + id);
-
-  console.log("llamado funcion => " + crearRuta(id));
-
+const promiseCloudinary = async (file, ruta) => {
   return new Promise((resolve, reject) => {
     //Usamos el metodo upload_stream de cloudinary para subir la imagen
     cloudinary.uploader
-      .upload_stream({ folder: crearRuta(id) }, (error, uploadedImage) => {
+      .upload_stream({ folder: ruta }, (error, uploadedImage) => {
         //Manejo de errores
         if (error)
           return {
@@ -40,10 +36,13 @@ const promiseCloudinary = (file, id) => {
 const subirImagen = async (req, res, next) => {
   try {
     //faltarian validaciones
-    const { idCategoria } = req.body;
+    const { idCategoria, nombre } = req.body;
+    
+    //llamado a la funcion para crear la ruta en la cual se guardara la imagen
+    let ruta = await crearRuta(idCategoria, nombre);
 
     const result = await Promise.all(
-      req.files.map((file) => promiseCloudinary(file, idCategoria))
+      req.files.map((file) => promiseCloudinary(file, ruta))
     );
     res.send({ message: "Imagen subida", urls: result });
   } catch (error) {
