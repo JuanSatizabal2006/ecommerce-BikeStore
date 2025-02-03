@@ -45,4 +45,4 @@ const crearRuta = async (id, nombre) => {
   return `${rutas[idCat]}${referencia}`;
 };
 
-module.exports = { crearRuta };
+module.exports = { crearRuta, crearReferencia };

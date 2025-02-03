@@ -1,10 +1,9 @@
 const db = require("../../db");
+const { crearReferencia } = require("../../helpers/rutaImg");
 const { jsonRespuesta } = require("../../lib/jsonRespuesta");
 
 const postArticulos = async (req, res) => {
-  //*INFORMACION QUE RECIBO DE PARTE DEL CLIENTE
   const {
-    idArticulo,
     nombre,
     impuesto,
     descuento,
@@ -15,58 +14,42 @@ const postArticulos = async (req, res) => {
     descripcion,
     talla,
     precioTotal,
-    //referencia,
-  } = req.user.producto;
+  } = req.body;
 
-  const rutasImg = req.user.imagenes.map((item) => {
-    return `https://bikestoresena.s3.amazonaws.com/${item}`;
-  });
-
-  const url_img = rutasImg.toString();
-
-  //Valido si están todos los datos
-  if (
-    !idArticulo ||
-    !nombre ||
-    !impuesto ||
-    !descuento ||
-    !margen ||
-    !stock ||
-    !costo ||
-    !idCategoria ||
-    !descripcion ||
-    !talla ||
-    !precioTotal
-  ) {
-    return res
-      .status(300)
-      .json(jsonRespuesta(300, { error: "¡Todos los campos son necesarios" }));
-  }
-
+  const imagenes = req.images.toString();
+  const referencia = await crearReferencia(idCategoria, nombre);
+  console.log(referencia);
+  
   try {
     const result = await db.query(
-      "INSERT INTO articulos (id_articulo, nombre, impuesto, descuento, margen, stock, costo, url_img, id_categoria, segunda_desc, referencia, precio_total) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *",
+      'INSERT INTO articulos (nombre, impuesto, descuento, margen, stock, costo, "imgUrl", "idCategoria", descripcion, talla, "precioTotal", referencia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
       [
-        id_articulo,
         nombre,
         impuesto,
         descuento,
         margen,
         stock,
         costo,
-        url_img,
-        id_categoria,
-        segunda_desc,
+        imagenes,
+        idCategoria,
+        descripcion,
+        talla,
+        precioTotal,
         referencia,
-        precio_total,
       ]
     );
-    console.log(result);
-    res.json(result.rows[0]);
-    //res.json("Cargue efectivo");
+
+    if (result.rows.length === 0) {
+      return res.status(400).json({ error: "Error al guardar el articulo" });
+    }
+    res.status(201).json({
+      mensaje: "Articulo creado con exito!",
+      data: result.rows,
+    });
   } catch (error) {
-    //!EVITAR QUE EL SERVIDOR SE CAIGA
-    res.json({ error: error.message });
+    res
+      .status(400)
+      .json({ mensaje: "Error al guardar el articulo", error: error.message });
   }
 };
 

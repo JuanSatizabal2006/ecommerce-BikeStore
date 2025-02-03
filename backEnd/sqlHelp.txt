@@ -1,0 +1,7 @@
+restablecer secuencias:
+
+toca obtener el nombre de la secuencia
+
+SELECT * from "articulos_id_articulo_seq"
+
+ALTER SEQUENCE "articulos_id_articulo_seq" RESTART WITH 1

@@ -35,18 +35,21 @@ const promiseCloudinary = async (file, ruta) => {
 
 const subirImagen = async (req, res, next) => {
   try {
-    //faltarian validaciones
     const { idCategoria, nombre } = req.body;
-    
+
     //llamado a la funcion para crear la ruta en la cual se guardara la imagen
     let ruta = await crearRuta(idCategoria, nombre);
 
     const result = await Promise.all(
       req.files.map((file) => promiseCloudinary(file, ruta))
     );
-    res.send({ message: "Imagen subida", urls: result });
+    if (!result) {
+      return res.send({ message: "Error al subir la imagen" });
+    }
+    req.images = result;
+    next();
   } catch (error) {
-    res.send({ error: error.message });
+    res.send({ message: "Error al subir la imagen", error: error.message });
   }
 };
 
