@@ -17,7 +17,7 @@ const validArticulo = (req, res, next) => {
       errors.precioTotal = "El precio total es requerido";
     if (req.files.length === 0)
       errors.imgUrl = "La imagen es requerida";
-
+    //Revisar si hay datos en el objeto de errors para lanzarlos
     if (Object.keys(errors).length > 0) {
       const error = new Error("Error en los datos");
       error.detalles = errors;
