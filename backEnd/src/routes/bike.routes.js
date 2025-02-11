@@ -48,7 +48,7 @@ const router = Router();
 router.get("/prueba", pruebas);
 //TODO: Sobre los articulos
 router.get("/articulos", getArticulos);
-router.get("/articulos/:id", getOneArticulo);
+//router.get("/articulos/:id", getOneArticulo);
 router.get("/home/articulos", getArticulosHome);
 
 router.delete("/articulos/:id", deleteArticulos);

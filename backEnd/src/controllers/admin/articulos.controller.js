@@ -19,7 +19,7 @@ const postArticulos = async (req, res) => {
   const imagenes = req.images.toString();
   const referencia = await crearReferencia(idCategoria, nombre);
   console.log(referencia);
-  
+
   try {
     const result = await db.query(
       'INSERT INTO articulos (nombre, impuesto, descuento, margen, stock, costo, "imgUrl", "idCategoria", descripcion, talla, "precioTotal", referencia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *',
@@ -53,6 +53,28 @@ const postArticulos = async (req, res) => {
   }
 };
 
+const getArticulos = async (req, res) => {
+  //Este endpoint incluye la paginacion
+  try {
+    const { page = 1, limit = 5 } = req.query;
+    const offset = (page - 1) * limit;
+
+    const response = await db.query(
+      'SELECT * FROM articulos ORDER BY "idArticulo" ASC LIMIT $1 OFFSET $2',
+      [limit, offset]
+    );
+
+    res.status(200).json({
+      mensaje: "Articulos obtenidos con exito",
+      data: response.rows,
+    });
+  } catch (error) {
+    res
+      .status(400)
+      .json({ mensaje: "Error al buscar articulos", error: error.message });
+  }
+};
+
 const getUltimoId = async (req, res) => {
   const response = await db.query(
     "SELECT MAX(id_articulo + 1) FROM public.articulos"
@@ -81,4 +103,9 @@ const getUltimaReferencia = (async = async (req, res) => {
   res.status(200).json(jsonRespuesta(200, response.rows[0]));
 });
 
-module.exports = { getUltimaReferencia, getUltimoId, postArticulos };
+module.exports = {
+  getUltimaReferencia,
+  getUltimoId,
+  postArticulos,
+  getArticulos,
+};
