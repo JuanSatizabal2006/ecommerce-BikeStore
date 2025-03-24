@@ -42,7 +42,7 @@ export const Producto = ({
     quitarProductoBoton(data);
     setAñadido(true);
   };
-
+//Hola
   return (
     <div className="flex flex-col w-56 items-center border-solid rounded-2xl px-2 py-[1.2rem] bg-white shadow relative">
       {descuento * 100 >= 10 && (
