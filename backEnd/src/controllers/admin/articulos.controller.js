@@ -56,17 +56,55 @@ const postArticulos = async (req, res) => {
 const getArticulos = async (req, res) => {
   //Este endpoint incluye la paginacion
   try {
-    const { page = 1, limit = 5 } = req.query;
+    const {
+      page = 1,
+      limit = 5,
+      categoria = "",
+      minPrecio = 0,
+      maxPrecio = 0,
+    } = req.query;
     const offset = (page - 1) * limit;
+    let params = [];
+    let query = "SELECT * FROM articulos WHERE (1=1) ";
+    let count = 0;
 
-    const response = await db.query(
-      'SELECT * FROM articulos ORDER BY "idArticulo" ASC LIMIT $1 OFFSET $2',
-      [limit, offset]
-    );
+    //CONDICIONALES PARA APLICAR FILTROS
+    if (categoria) {
+      let categorias = categoria.split(",");
+      params.push(...categorias);
+      //Se recorre el array de cateogorias y se agrega al query, cada posicion de ese array es una categoria
+      query += `AND "idCategoria" IN (${categorias
+        .map((value, index) => `$${index + 1}`)
+        .join(",")}) `;
+    }
+
+    if (minPrecio && maxPrecio) {
+      params.push(minPrecio, maxPrecio);
+      query += `AND precioTotal BETWEEN $${params.length - 1} AND $${
+        params.length
+      }`;
+    }
+    //FIN DE CONDICIONALES PARA LOS FILTROS
+    //Contar los resultados de la busqueda
+    const queryCount = await db.query(query.replace("*", "COUNT(*)"), params.length > 0 ? params : null);
+    
+    query += `ORDER BY "idArticulo" ASC LIMIT $${params.length + 1} OFFSET $${
+      params.length + 2
+    }`;
+    console.log(query);
+    
+    const response = await db.query(query, params.length > 0 ? [...params, limit, offset] : [limit, offset]);
+
+    if (response.rowCount === 0) {
+      return res.status(404).json({ mensaje: "No se encontraron articulos" });
+    }
 
     res.status(200).json({
       mensaje: "Articulos obtenidos con exito",
-      data: response.rows,
+      data: {
+        count: queryCount.rows[0].count,
+        articulos: response.rows,
+      },
     });
   } catch (error) {
     res
