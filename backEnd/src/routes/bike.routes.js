@@ -36,7 +36,7 @@ const {
   postArticulos,
   getUltimoId,
   getUltimaReferencia,
-} = require("../controllers/admin/articulos.controller");
+} = require("../controllers/articulos/articulos.controller");
 const { subirImagen } = require("../controllers/admin/subirImagen");
 
 const multer = require("multer");

@@ -113,6 +113,26 @@ const getArticulos = async (req, res) => {
   }
 };
 
+//Talvez tenga que eliminar las imagenes actuales y volver a crearlas
+const putArticulos = (req, res) =>{
+  try {
+    const {
+      nombre,
+      impuesto,
+      descuento,
+      margen,
+      stock,
+      costo,
+      idCategoria,
+      descripcion,
+      talla,
+      precioTotal,
+    } = req.body;
+  } catch (error) {
+    res.status(400).json({mensaje : "Error al actualizar el articulo", error: error.message})
+  }
+}
+
 const getUltimoId = async (req, res) => {
   const response = await db.query(
     "SELECT MAX(id_articulo + 1) FROM public.articulos"
