@@ -94,7 +94,7 @@ const getArticulos = async (req, res) => {
     console.log(query);
     
     const response = await db.query(query, params.length > 0 ? [...params, limit, offset] : [limit, offset]);
-
+    
     if (response.rowCount === 0) {
       return res.status(404).json({ mensaje: "No se encontraron articulos" });
     }

@@ -19,6 +19,8 @@ export const Catalogo = () => {
 
   return (
     <>
+    <NavBar />
+    {/*
       <NavBar />
         <main className="flex flex-col items-center xl:items-start xl:flex-row justify-evenly mt-8 ">
           <div className="px-4 py-4 xl:px-10">
@@ -55,7 +57,7 @@ export const Catalogo = () => {
           </div>
           
         </main>
-      
+  */}
     </>
   )
 };
