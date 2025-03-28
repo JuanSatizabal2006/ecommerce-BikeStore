@@ -5,7 +5,7 @@ const router = Router();
 
 //CONFIGURACION DEL MULTER
 const multer = require("multer");
-const { postArticulos, getArticulos } = require("../controllers/admin/articulos.controller");
+const { postArticulos, getArticulos } = require("../controllers/articulos/articulos.controller");
 const { validArticulo } = require("../middlewares/datos/articulos.middleware");
 const storage = multer.memoryStorage(); //Imagenes en memoria, son temporales
 const upload = multer({ storage });
