@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ArticuloCard } from "../../../components/cards/articuloCard";
+import { CardArticulo } from "../../../components/cards/cardArticulo";
 import TitleHome from "../../../components/titleHome";
 
 const CatalogoTop = () => {
@@ -26,7 +26,7 @@ const CatalogoTop = () => {
       />
       <div className="productos flex xl:flex-row flex-col xl:justify-center items-center gap-x-16 ">
         {productos.map((item) => (
-          <ArticuloCard
+          <CardArticulo
             descuento={item.descuento}
             urlmg={item.url_img.split(",").shift()}
             nombreProducto={item.nombre}

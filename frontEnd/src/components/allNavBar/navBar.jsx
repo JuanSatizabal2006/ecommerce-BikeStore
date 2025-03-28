@@ -2,7 +2,7 @@ import React from "react";
 import { SideBar } from "./sideBar";
 import { SideBarUser } from "./sideBarUser";
 import { Link } from "react-router-dom";
-import img1 from "../../img/img_sideBarUser/img1.png";
+import img1 from "/public/img/default/sideBarUser.png";
 import { usarCarrito } from "../../helper/usarCarrito";
 import { useAuth } from "../../auth/authProvider";
 import { CartProvider } from "../carrito/carritoContext";

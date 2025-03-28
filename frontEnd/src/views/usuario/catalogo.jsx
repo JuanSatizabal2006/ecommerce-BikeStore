@@ -4,6 +4,7 @@ import { Footer } from "../../components/footers/footer";
 import { Producto } from "../../components/producto/producto";
 import { Categorías } from "../../components/producto/filtrado/filtro";
 import Paginador from "../../components/producto/paginador";
+import ListaProductos from "../../sections/usuario/catalogo/listaProductos";
 
 
 export const Catalogo = () => {
@@ -20,6 +21,8 @@ export const Catalogo = () => {
   return (
     <>
     <NavBar />
+    <h1>SOY EL CATALOGO</h1>
+    <ListaProductos />
     {/*
       <NavBar />
         <main className="flex flex-col items-center xl:items-start xl:flex-row justify-evenly mt-8 ">

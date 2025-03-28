@@ -1,5 +1,5 @@
 import React from "react";
-import logoSenaBlanco from "../../img/logos/logo_sena_blanco.png";
+import logoSenaBlanco from "/public/img/logos/logo_sena_blanco.png";
 import { Link } from "react-router-dom";
 export const Footer = () => {
   return (

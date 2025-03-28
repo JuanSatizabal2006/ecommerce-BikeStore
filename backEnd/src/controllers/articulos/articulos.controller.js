@@ -52,13 +52,13 @@ const postArticulos = async (req, res) => {
       .json({ mensaje: "Error al guardar el articulo", error: error.message });
   }
 };
-
+//NOTA: LA PROPIEDAD OFFSET EN SQL ES DESDE DONDE EMPIEZA LA CONSULTA
 const getArticulos = async (req, res) => {
   //Este endpoint incluye la paginacion
   try {
     const {
       page = 1,
-      limit = 5,
+      limit = 6,
       categoria = "",
       minPrecio = 0,
       maxPrecio = 0,
@@ -66,7 +66,8 @@ const getArticulos = async (req, res) => {
     const offset = (page - 1) * limit;
     let params = [];
     let query = "SELECT * FROM articulos WHERE (1=1) ";
-    let count = 0;
+    let nextPage = "",
+      sumNext = 0;
 
     //CONDICIONALES PARA APLICAR FILTROS
     if (categoria) {
@@ -85,24 +86,40 @@ const getArticulos = async (req, res) => {
       }`;
     }
     //FIN DE CONDICIONALES PARA LOS FILTROS
+
     //Contar los resultados de la busqueda
-    const queryCount = await db.query(query.replace("*", "COUNT(*)"), params.length > 0 ? params : null);
-    
+    const queryCount = await db.query(
+      query.replace("*", "COUNT(*)"),
+      params.length > 0 ? params : null
+    );
+
     query += `ORDER BY "idArticulo" ASC LIMIT $${params.length + 1} OFFSET $${
       params.length + 2
     }`;
-    console.log(query);
-    
-    const response = await db.query(query, params.length > 0 ? [...params, limit, offset] : [limit, offset]);
-    
+
+    const response = await db.query(
+      query,
+      params.length > 0 ? [...params, limit, offset] : [limit, offset]
+    );
+
     if (response.rowCount === 0) {
-      return res.status(404).json({ mensaje: "No se encontraron articulos" });
+      return res
+        .status(404)
+        .json({ mensaje: "No se encontraron articulos", sgtPagina: false });
     }
+    //Validamos si podemos enviar el siguiente enlace, si la multiplicacion de la pagina actual por el limite menos la cantidad de resultados es menor o igual al limite, entonces si podemos enviar el siguiente enlace,  (o tambien si la resta da como resultado negativo) de lo contrario no, ya que no hay más articulos por mostrar
+    
+    sumNext = (parseInt(page) + 1) * parseInt(limit) - parseInt(queryCount.rows[0].count);
+
+    sumNext < 0 || sumNext <= parseInt(limit)
+      ? (nextPage = `http://localhost:3000/articulos/list?page=${parseInt(page) + 1}&limit=${limit}`)
+      : (nextPage = false);
 
     res.status(200).json({
       mensaje: "Articulos obtenidos con exito",
       data: {
         count: queryCount.rows[0].count,
+        sgtPagina: nextPage,
         articulos: response.rows,
       },
     });
@@ -114,7 +131,7 @@ const getArticulos = async (req, res) => {
 };
 
 //Talvez tenga que eliminar las imagenes actuales y volver a crearlas
-const putArticulos = (req, res) =>{
+const putArticulos = (req, res) => {
   try {
     const {
       nombre,
@@ -129,9 +146,12 @@ const putArticulos = (req, res) =>{
       precioTotal,
     } = req.body;
   } catch (error) {
-    res.status(400).json({mensaje : "Error al actualizar el articulo", error: error.message})
+    res.status(400).json({
+      mensaje: "Error al actualizar el articulo",
+      error: error.message,
+    });
   }
-}
+};
 
 const getUltimoId = async (req, res) => {
   const response = await db.query(

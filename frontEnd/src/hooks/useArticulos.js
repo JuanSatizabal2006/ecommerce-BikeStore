@@ -1,55 +1,35 @@
 import { useEffect, useState } from "react";
-const urlInitial = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20";
+import { urlApi } from "../constants/urlApi";
+const urlInitial = `${urlApi}articulos/list?page=1&limit=6`;
 
-export const usePokemon = () => {
-  const [pokemons, setPokemons] = useState([]);
+export const useArticulos = () => {
+  const [articulos, setArticulos] = useState([]);
   const [link, setLink] = useState("");
   const [more, setMore] = useState(true);
+  const [countArt, setCountArt] = useState(0)
 
   const getApi = async (url = urlInitial) => {
-    //Llamado a la API que brinda la paginacion de los pokemones
+    let next = "", dataArticulos = [], count = 0, error = false;
+    
     const response = await fetch(url);
+    if (response.status !== 200) {
+      error = true;
+      return { next, dataArticulos, count, error };
+    }
+    //Capturamos la respuesta
     const data = await response.json();
-
-    //Destructuracion de los datos paginados
-    //next => siguiente url con mas datos paginados
-    //results => urls con los pokemones paginados
-
-    const { next, results } = data;
-
-    //Son varias url
-    const listPokemons = await Promise.all(
-      results.map(async (value) => {
-        //Value conyti
-        const responsePokemon = await fetch(value.url);
-
-        //DATOS DEL POKEMON
-        const dataPokemon = await responsePokemon.json();
-
-        return {
-          name: dataPokemon.name,
-          id: dataPokemon.id,
-          types: dataPokemon.types,
-          hp: dataPokemon.stats[0].base_stat,
-          atk: dataPokemon.stats[1].base_stat,
-          def: dataPokemon.stats[2].base_stat,
-          img: dataPokemon.sprites.other["official-artwork"].front_default,
-        };
-      })
-    );
-
-    return { next, listPokemons };
+    console.log(data);
+    
+    dataArticulos = data.data.articulos;
+    count = data.data.count;
+    next = data.data.sgtPagina; //URL de la siguiente pagina
+    console.log(dataArticulos);
+    
+    return { next, dataArticulos, count, error };
   };
 
-  const getPokemon = async () => {
-    const { next, listPokemons } = await getApi();
-    setLink(next);
-    setPokemons(listPokemons);
-  };
-
-  const morePokemons = async () => {
-    //LIMIT 500 POKEMONES
-    if (link.includes("offset=500")) {
+  const moreArticulos = async () => {
+    if (link) {
       setMore(false);
       return;
     }
@@ -59,9 +39,24 @@ export const usePokemon = () => {
     setLink(next);
   };
 
+  //Solo se activa una vez
+  const getArticulos = async () => {
+    const { next, dataArticulos, count, error } = await getApi();
+    console.log(dataArticulos);
+    
+    if(error){
+      setMore(false);
+      setLink(false);
+      return;
+    }
+    setLink(next);
+    setArticulos(dataArticulos);
+    setCountArt(count)
+  };
+
   useEffect(() => {
-    getPokemon();
+    getArticulos();
   }, []);
 
-  return { morePokemons, pokemons, more };
+  return { moreArticulos, articulos, more, countArt };
 };
