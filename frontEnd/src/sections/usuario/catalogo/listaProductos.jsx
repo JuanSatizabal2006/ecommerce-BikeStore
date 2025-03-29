@@ -2,38 +2,26 @@ import React, { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { CardArticulo } from "../../../components/cards/cardArticulo";
 import { useArticulos } from "../../../hooks/useArticulos";
+import { Cargando } from "../../../components/alerts/cargando";
 
 const ListaProductos = () => {
   const { moreArticulos, articulos, more, countArt } = useArticulos();
-  console.log(articulos);
+  console.log(articulos.length);
 
   return (
     <>
-      {/*
-      articulos.map((values, index) => (
-        <CardArticulo
-          idProducto={values.idArticulo}
-          nombre={values.nombre}
-          urlmg={values.imgUrl.split(',')[0]}
-          descuento={values.descuento}
-          precio={values.precioTotal}
-          precioAnterior={0}
-          objetoProducto={values}
-          key={index}
-        />
-      ))*/}
-
+      <p>{countArt} Resultados</p>
       <InfiniteScroll
         dataLength={articulos.length}
         next={moreArticulos}
         hasMore={more}
-        loader={<p>Cargando</p>}
+        loader={<Cargando texto="Cargando" />}
         endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Ya no hay más productos</b>
-          </p>
+          <div className="col-span-3">
+            <p>Ya no hay más productos</p>
+          </div>
         }
-        className="grid grid-cols-3"
+        className="w-full grid grid-cols-3 gap-8 justify-items-center py-1"
       >
         {articulos.map((values, index) => (
           <CardArticulo

@@ -6,52 +6,54 @@ export const useArticulos = () => {
   const [articulos, setArticulos] = useState([]);
   const [link, setLink] = useState("");
   const [more, setMore] = useState(true);
-  const [countArt, setCountArt] = useState(0)
+  const [countArt, setCountArt] = useState(0);
 
   const getApi = async (url = urlInitial) => {
-    let next = "", dataArticulos = [], count = 0, error = false;
-    
+    let next = "",
+      dataArticulos = [],
+      count = 0,
+      error = false;
+
     const response = await fetch(url);
     if (response.status !== 200) {
+      console.log(response.data.error);
+
       error = true;
       return { next, dataArticulos, count, error };
     }
     //Capturamos la respuesta
     const data = await response.json();
-    console.log(data);
-    
+
     dataArticulos = data.data.articulos;
     count = data.data.count;
     next = data.data.sgtPagina; //URL de la siguiente pagina
-    console.log(dataArticulos);
-    
     return { next, dataArticulos, count, error };
   };
 
   const moreArticulos = async () => {
-    if (link) {
+    if (!link) {
       setMore(false);
       return;
     }
-    const { next, listPokemons } = await getApi(link);
-    setPokemons((prev) => [...prev, ...listPokemons]);
-    next === null && setMore(false); //Por si ya no encuentra
+
+    const { next, dataArticulos } = await getApi(link);
+    setArticulos((prev) => [...prev, ...dataArticulos]);
     setLink(next);
   };
 
   //Solo se activa una vez
   const getArticulos = async () => {
     const { next, dataArticulos, count, error } = await getApi();
-    console.log(dataArticulos);
-    
-    if(error){
+
+    if (error) {
       setMore(false);
       setLink(false);
       return;
     }
+
     setLink(next);
     setArticulos(dataArticulos);
-    setCountArt(count)
+    setCountArt(count);
   };
 
   useEffect(() => {
