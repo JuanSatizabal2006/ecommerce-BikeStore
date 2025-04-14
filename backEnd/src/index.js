@@ -3,6 +3,7 @@ const morgan = require("morgan"); //Importacion de modulos morgan
 const cors = require("cors"); //Importacion de modulos cors
 const bikeRoutes = require("./routes/bike.routes");
 const routesArticulos = require("./routes/articulos.routes");
+const routesInfo = require("./routes/info.routes");
 
 const app = express(); //En app recaen todas las funcionalidades de express
 
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(bikeRoutes);
 app.use(routesArticulos);
+app.use(routesInfo);
 
 app.listen(3000); //Definir el puerto
 console.log("Servidor en el puerto 3000");

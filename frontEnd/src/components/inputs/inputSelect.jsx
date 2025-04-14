@@ -1,27 +1,32 @@
-import React, { useEffect } from 'react'
-import Select from 'react-select'
-import { optionsSelect } from '../../constants/optionsSelect'
+import { Option, Select } from "@material-tailwind/react";
+import React, { useEffect, useState } from "react";
+import { fetchFunction } from "../../api/fetch";
 
-export const Selector = ({text, enviarSelect, opciones, idValue}) => {
-    
-    useEffect(()=>{
-        enviarSelect(idValue)
-    },[enviarSelect, idValue])
+const InputSelect = ({ label, api = "", id, value }) => {
+  const [data, setData] = useState([]);
 
-    return (
-        <>
-            {
-                !opciones ? 
-                <div className='w-full justify-center'>
-                    <p className='pl-1 text-2xl'>{text}</p>
-                    <Select options={optionsSelect} className='border-2 border-red focus:ring-0 focus:ring-offset-0 outline-transparent rounded-lg text-xl' defaultValue={idValue} onChange={enviarSelect}  />
-                </div> 
-            : 
-                <div className='w-full justify-center'>
-                    <p className='pl-1 text-2xl'>{text}</p>
-                    <Select options={opciones} className='border-2 border-red focus:border-red focus:ring-0 focus:ring-offset-0 outline-transparent rounded-lg text-xl' defaultValue={idValue} onChange={enviarSelect}  />
-                </div>
-            }
-        </>
-    )
-}
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetchFunction("GET", null, null, api);
+      if (response.error) {
+        console.log(response.error);
+      }
+      console.log(response);
+      
+      setData(response.data.data);
+    };
+    getData();
+  }, []);
+
+  return (
+    <Select label={label}>
+      {data.map((item, index) => (
+        <Option value={item[id]} key={index}>
+          {item[value]}
+        </Option>
+      ))}
+    </Select>
+  );
+};
+
+export default InputSelect;

@@ -6,7 +6,6 @@ import { Cargando } from "../../../components/alerts/cargando";
 
 const ListaProductos = () => {
   const { moreArticulos, articulos, more, countArt } = useArticulos();
-  console.log(articulos.length);
 
   return (
     <>

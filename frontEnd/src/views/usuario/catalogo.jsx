@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { NavBar } from "../../components/allNavBar/navBar";
-import { Footer } from "../../components/footers/footer";
-import { Producto } from "../../components/producto/producto";
-import { Categorías } from "../../components/producto/filtrado/filtro";
-import Paginador from "../../components/producto/paginador";
 import ListaProductos from "../../sections/usuario/catalogo/listaProductos";
 import FiltrosProductos from "../../sections/usuario/catalogo/filtrosProductos";
 
 export const Catalogo = () => {
-  const [productosPaginados, setProductoPaginados] = useState([]);
-
-  const enviarProducto = (dato) => {
-    console.log("datos en catalogo: ", dato);
-    setProductoPaginados(dato);
-  };
-  const [categoriasVisibles, setCategoriasVisibles] = useState(true);
 
   return (
     <>
